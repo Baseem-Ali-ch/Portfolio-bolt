@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-amber-50 text-amber-900 dark:bg-zinc-900 dark:text-amber-300;
+    font-family: 'Georgia', serif;
+  }
+}
+
+@layer components {
+  /* Custom cursor for terminal sections */
+  .terminal-cursor {
+    @apply w-2 h-4 bg-lime-400 inline-block;
+    animation: blink 1s step-end infinite;
+  }
+  
+  /* Scanline effect for CRT-like appearance */
+  .scanline-effect::after {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full pointer-events-none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    animation: scanline 10s linear infinite;
+  }
+  
+  /* Shadow styles for retro cards */
+  .shadow-retro {
+    box-shadow: 5px 5px 0px 0px rgba(146, 64, 14, 0.8);
+  }
+  
+  .shadow-retro-zinc {
+    box-shadow: 5px 5px 0px 0px rgba(82, 82, 91, 0.8);
+  }
+  
+  .shadow-neon {
+    box-shadow: 0 0 5px rgba(163, 230, 53, 0.5), 0 0 10px rgba(163, 230, 53, 0.3);
+  }
+  
+  /* Typing text effect */
+  .typing-text {
+    @apply overflow-hidden whitespace-nowrap;
+    border-right: 0.15em solid;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  /* Blinking text effect */
+  .blink-text {
+    animation: blink 1s step-end infinite;
+  }
+  
+  /* Pixelated error graphic */
+  .pixelated-error {
+    @apply w-full h-full;
+    background-image: radial-gradient(
+      rgba(255, 50, 50, 0.8) 2px,
+      transparent 2px
+    );
+    background-size: 8px 8px;
+  }
+  
+  /* Glitch text effect */
+  .glitch-text {
+    position: relative;
+    animation: glitch 3s infinite;
+  }
+  
+  .glitch-text::before,
+  .glitch-text::after {
+    content: "404";
+    @apply absolute top-0 left-0 w-full h-full;
+  }
+  
+  .glitch-text::before {
+    animation: glitch-top 3s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    @apply text-red-500;
+  }
+  
+  .glitch-text::after {
+    animation: glitch-bottom 2.5s infinite;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    @apply text-blue-500;
+  }
+}
+
+@layer utilities {
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+  
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: currentColor }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+  }
+  
+  @keyframes glitch-top {
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(-2px, -2px); }
+    30% { transform: translate(2px, 2px); }
+    50% { transform: translate(-2px, 2px); }
+    70% { transform: translate(2px, -2px); }
+  }
+  
+  @keyframes glitch-bottom {
+    0%, 100% { transform: translate(0); }
+    15% { transform: translate(2px, 2px); }
+    35% { transform: translate(-2px, -2px); }
+    55% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, 2px); }
+  }
+  
+  .animate-scan {
+    animation: scan 8s linear infinite;
+  }
+  
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+  }
+}
+
+/* Ensure images render pixelated */
+img {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
